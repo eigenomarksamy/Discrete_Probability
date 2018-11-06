@@ -1,0 +1,42 @@
+#! /usr/bin/python
+from scipy import stats
+import matplotlib.pyplot as plt
+import numpy as np
+n = 10
+p = 0.3
+k = np.arange(0, 21)
+binomial = stats.binom.pmf(k, n, p)
+plt.figure(1)
+plt.subplot(211)
+plt.plot(k, binomial, 'o-')
+plt.axis([min(k), (max(k) + 0.05 * max(k)), min(binomial), 0.3])
+plt.title('Binomial: n = %i, p = %.2f' % (n,p), fontsize = 15)
+plt.xlabel('Number of successes')
+plt.ylabel('Probability of successes', fontsize = 15)
+binom_sim = data = stats.binom.rvs(n = 10, p = 0.3, size = 10000)
+print "Mean: %g" % np.mean(binom_sim)
+print "SD: %g" % np.std(binom_sim, ddof = 1)
+plt.subplot(212)
+plt.hist(binom_sim, bins = 10, density = True)
+plt.axis([0, (max(k) + 0.05 * max(k)), 0, 0.3])
+plt.xlabel("x")
+plt.ylabel("density")
+rate = 2
+n_p = np.arange(0, 10)
+y = stats.poisson.pmf(n_p, rate)
+plt.figure(2)
+plt.subplot(211)
+plt.plot(n_p, y, 'o-')
+plt.axis([min(n_p), (max(n_p) + 0.05 * max(n_p)), min(y), (max(y) + 0.05 * max(y))])
+plt.title('Poisson: $\lambda$ = %i' % rate)
+plt.xlabel('Number of accidents')
+plt.ylabel('Probability of number of accidents')
+data = stats.poisson.rvs(mu = 2, loc = 0, size = 10000)
+print "Mean: %g" % np.mean(data)
+print "SD: %g" % np.std(data, ddof = 1)
+plt.subplot(212)
+plt.hist(data, bins = 9, density = True)
+plt.xlim(0, 10)
+plt.xlabel("Number of accidents")
+plt.title("Simulating Poisson Random Variables")
+plt.show()
